@@ -1,0 +1,50 @@
+# Django
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+*.bak
+*.swp
+__pycache__/
+db.sqlite3
+media/
+staticfiles/
+.env
+*.env
+.vscode/
+.idea/
+*.pkl
+
+# React Native
+# React Native specific
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+dist/
+*.iml
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# VSCode
+.vscode/
+
+# Python
+venv/
+.venv/
+*.pyc
+
+# PyCharm
+.idea/
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+Dockerfile
