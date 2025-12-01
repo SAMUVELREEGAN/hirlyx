@@ -10,14 +10,20 @@ export default function DashboardScreen() {
 
   const loadTodos = async () => {
     const token = await getToken();
-    const res = await api.get("/todos/", { headers: { Authorization: `Bearer ${token}` } });
+    const res = await api.get("/todos/", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     setTodos(res.data);
   };
 
   const addTodo = async () => {
     if (!task.trim()) return;
     const token = await getToken();
-    await api.post("/todos/", { title: task.trim() }, { headers: { Authorization: `Bearer ${token}` } });
+    await api.post(
+      "/todos/",
+      { title: task.trim() },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
     setTask("");
     Keyboard.dismiss();
     loadTodos();
@@ -25,13 +31,29 @@ export default function DashboardScreen() {
 
   const completeTodo = async (id) => {
     const token = await getToken();
-    await api.patch(`/todos/${id}/`, { completed: true }, { headers: { Authorization: `Bearer ${token}` } });
+    await api.patch(
+      `/todos/${id}/`,
+      { completed: true },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
     loadTodos();
   };
 
   const deleteTodo = async (id) => {
     const token = await getToken();
-    await api.delete(`/todos/${id}/`, { headers: { Authorization: `Bearer ${token}` } });
+    await api.delete(`/todos/${id}/`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    loadTodos();
+  };
+
+  const editTodo = async (id, title) => {
+    const token = await getToken();
+    await api.patch(
+      `/todos/${id}/`,
+      { title },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
     loadTodos();
   };
 
@@ -59,7 +81,12 @@ export default function DashboardScreen() {
         data={todos}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <TodoItem item={item} onComplete={completeTodo} onDelete={deleteTodo} />
+          <TodoItem
+            item={item}
+            onComplete={completeTodo}
+            onDelete={deleteTodo}
+            onEdit={editTodo}
+          />
         )}
       />
     </View>

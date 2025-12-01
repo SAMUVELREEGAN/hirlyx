@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { 
-  View, 
-  Text, 
-  TextInput, 
-  TouchableOpacity, 
-  StyleSheet, 
-  Alert 
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -18,10 +18,11 @@ export default function TodoItem({ item, onComplete, onDelete, onEdit }) {
       Alert.alert("Error", "Task cannot be empty");
       return;
     }
-    
+
     if (editedTitle !== item.title) {
       onEdit(item.id, editedTitle.trim());
     }
+
     setIsEditing(false);
   };
 
@@ -40,8 +41,8 @@ export default function TodoItem({ item, onComplete, onDelete, onEdit }) {
           color={item.completed ? "green" : "gray"}
         />
       </TouchableOpacity>
-      
-      {/* Task Content - Edit Mode or View Mode */}
+
+      {/* Text or Edit Input */}
       <View style={styles.textContainer}>
         {isEditing ? (
           <TextInput
@@ -49,47 +50,47 @@ export default function TodoItem({ item, onComplete, onDelete, onEdit }) {
             onChangeText={setEditedTitle}
             style={styles.editInput}
             autoFocus
-            onSubmitEditing={handleSave}
-            onBlur={handleCancel}
           />
         ) : (
           <Text
             style={[
               styles.text,
-              item.completed && { 
-                textDecorationLine: "line-through", 
+              item.completed && {
+                textDecorationLine: "line-through",
                 color: "gray",
-                opacity: 0.7 
+                opacity: 0.7,
               },
             ]}
-            numberOfLines={2}
           >
             {item.title}
           </Text>
         )}
       </View>
 
-      {/* Action Buttons */}
+      {/* Actions */}
       <View style={styles.actions}>
         {!item.completed && (
-          <TouchableOpacity 
-            onPress={() => isEditing ? handleSave() : setIsEditing(true)}
+          <TouchableOpacity
+            onPress={() => (isEditing ? handleSave() : setIsEditing(true))}
             style={styles.actionButton}
           >
-            <Ionicons 
-              name={isEditing ? "checkmark" : "pencil"} 
-              size={22} 
-              color={isEditing ? "green" : "#007bff"} 
+            <Ionicons
+              name={isEditing ? "checkmark" : "pencil"}
+              size={22}
+              color={isEditing ? "green" : "#007bff"}
             />
           </TouchableOpacity>
         )}
-        
+
         {isEditing ? (
           <TouchableOpacity onPress={handleCancel} style={styles.actionButton}>
             <Ionicons name="close" size={22} color="red" />
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity onPress={() => onDelete(item.id)} style={styles.actionButton}>
+          <TouchableOpacity
+            onPress={() => onDelete(item.id)}
+            style={styles.actionButton}
+          >
             <Ionicons name="trash-outline" size={22} color="red" />
           </TouchableOpacity>
         )}
@@ -108,13 +109,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginVertical: 6,
     backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
     elevation: 2,
   },
   textContainer: {
@@ -125,12 +119,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: "#333",
-    lineHeight: 22,
   },
   editInput: {
     fontSize: 16,
     fontWeight: "500",
-    color: "#333",
     borderBottomWidth: 1,
     borderBottomColor: "#007bff",
     paddingVertical: 4,
